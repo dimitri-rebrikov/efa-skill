@@ -20,6 +20,11 @@ EFA_URL="https://www3.vvs.de/mngvvs/" uv run python main.py departures "Stuttgar
 
 uv run python main.py --help
 
+echo "JSON output examples:"
+uv run python main.py search-stations "Stuttgart Hbf" --limit 3 --json
+uv run python main.py trip "Stuttgart Hbf" "Stuttgart Airport" --json
+uv run python main.py departures "Stuttgart Hbf" --limit 3 --json
+
 # Disable command tracing
 set +x
 

@@ -8,6 +8,8 @@ OpenClaw skill for public transit queries using [apyefa](https://github.com/alex
 - `plan_trip(origin, dest, time=None)`: Trip routes with optional departure time.
 - `get_departures(location, limit=10, time=None)`: Departures with flexible time queries.
 
+All commands support `--json` flag for JSON output instead of human-readable format.
+
 Location: name or ID "de:08111:6118"
 
 Time: "20:20", "25 Apr 20:20", "Dienstag 20:20" (dateutil fuzzy parsing).
@@ -37,6 +39,14 @@ uv run python main.py search-stations "Stuttgart Hbf" --limit 3
 uv run python main.py trip "Stuttgart Hbf" "Stuttgart Flughafen"
 uv run python main.py trip "Stuttgart Hbf" "Stuttgart Airport" --time "14:00"
 uv run python main.py departures "de:08111:6118" --time "Dienstag 20:20"
+```
+
+For JSON output, add the `--json` flag:
+
+```bash
+uv run python main.py search-stations "Stuttgart Hbf" --limit 3 --json
+uv run python main.py trip "Stuttgart Hbf" "Stuttgart Airport" --json
+uv run python main.py departures "de:08111:6118" --json
 ```
 
 ## OpenClaw Usage
