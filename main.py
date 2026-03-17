@@ -53,7 +53,15 @@ class EfaCli:
                     for leg in journey.legs:
                         line = leg.transport.name or leg.transport.number or 'Line'
                         duration_min = math.ceil(leg.duration / 60)
-                        result += f"  {line}: {leg.origin.name} -> {leg.destination.name} ({duration_min} min)\n"
+                        try:
+                            planned = leg.raw_data['origin']['departureTimePlanned']
+                            start_str = date_parser.parse(planned).strftime("%H:%M")
+                            estimated = leg.raw_data['origin'].get('departureTimeEstimated')
+                            if estimated and estimated != planned:
+                                start_str += f" (est. {date_parser.parse(estimated).strftime('%H:%M')})"
+                        except (KeyError, ValueError):
+                            start_str = "N/A"
+                        result += f"  ({start_str}) {line}: {leg.origin.name} -> {leg.destination.name} ({duration_min} min)\n"
                 return result
             except Exception as e:
                 return f"Trip planning failed: {e}"
@@ -73,7 +81,7 @@ class EfaCli:
                 time_str = dep.planned_time.strftime("%H:%M")
                 if dep.estimated_time and dep.estimated_time != dep.planned_time:
                     time_str += f" (est. {dep.estimated_time.strftime('%H:%M')})"
-                result += f"- {dep.line_name} -> {dep.destination.name} {time_str}\n"
+                result += f"- {time_str} {dep.line_name} -> {dep.destination.name}\n"
             return result
 
 
