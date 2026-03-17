@@ -77,57 +77,9 @@ class EfaCli:
             return result
 
 
-async def show_demo():
-    """Demonstrate all CLI parameters with examples."""
-    print("EFA CLI Demo - All Parameters")
-    print("=" * 40)
-    print()
-
-    print("1. Global Parameters:")
-    print("   --demo                    Show this demo")
-    print()
-
-    print("2. search-stations command:")
-    print("   python main.py search-stations <name> [--limit <number>]")
-    print()
-    print("   Examples:")
-    print("   python main.py search-stations 'Stuttgart'")
-    print("   python main.py search-stations 'Hauptbahnhof' --limit 10")
-    print()
-
-    print("3. trip command:")
-    print("   python main.py trip <origin> <destination> [--time <time>]")
-    print()
-    print("   Examples:")
-    print("   python main.py trip 'Stuttgart Hauptbahnhof' 'Stuttgart Marienplatz'")
-    print("   python main.py trip 'Stuttgart Hbf' 'Stuttgart Flughafen' --time '14:00'")
-    print("   python main.py trip 'Stuttgart' 'München' --time '2024-12-25 15:30'")
-    print()
-
-    print("4. departures command:")
-    print("   python main.py departures <location> [--limit <number>] [--time <time>]")
-    print()
-    print("   Examples:")
-    print("   python main.py departures 'Stuttgart Hauptbahnhof'")
-    print("   python main.py departures 'Stuttgart Hbf' --limit 5")
-    print("   python main.py departures 'Stuttgart' --time '20:20'")
-    print("   python main.py departures 'Hauptbahnhof' --time 'Dienstag 20:20' --limit 15")
-    print()
-
-    print("Environment Variables:")
-    print("   EFA_URL                    Set custom EFA endpoint URL")
-    print("                             Default: https://efa.de/efa")
-    print()
-
-    print("Notes:")
-    print("- Time formats: 'HH:MM', 'YYYY-MM-DD HH:MM', or natural language like 'Dienstag 20:20'")
-    print("- All location names are automatically resolved to station IDs")
-    print("- Use quotes around location names with spaces")
-
 
 async def main():
     parser = argparse.ArgumentParser(description="EFA CLI for VVS")
-    parser.add_argument('--demo', action='store_true', help='Show demo of all CLI parameters')
     subparsers = parser.add_subparsers(dest='command', help='Commands')
 
     # Search stations
@@ -148,10 +100,6 @@ async def main():
     dep_parser.add_argument('--time', help='Time (e.g. "20:20", "Dienstag 20:20")')
 
     args = parser.parse_args()
-
-    if args.demo:
-        await show_demo()
-        return
 
     cli = EfaCli()
 
